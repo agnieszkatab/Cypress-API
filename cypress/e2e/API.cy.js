@@ -159,4 +159,18 @@ describe('API tests', () => {
       expect(response.body.cookies).to.deep.eq({ cookieName: 'cookieValue' })
     });
   });
+
+  it('test that custom header set correctly', () => {
+    cy.request({
+      method: 'GET',
+      url: 'https://httpbin.org/headers',
+      headers: {
+        'Custom-Header': 'Header-Value'
+      }
+    }).then((response) => {
+      expect(response.status).to.eq(200);
+      expect(response.body.headers['Custom-Header']).to.eq('Header-Value')
+    });
+  });
+
 });
