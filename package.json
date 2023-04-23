@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "test": "cypress run",
-    "start": "index.js"
+    "start": "API.cy.js"
   },
   "keywords": [],
   "author": "",
