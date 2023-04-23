@@ -1,0 +1,16 @@
+name: Cypress API Tests
+
+on: push
+
+
+jobs: 
+  cypress-run:
+    runs-on:  Windows 10 Enterprise
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Cypress run
+        uses: cypress-io/github-action@v5
+        with:
+          build: npm run build
+          start: npm start
