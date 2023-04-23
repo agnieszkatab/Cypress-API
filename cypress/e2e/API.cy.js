@@ -48,22 +48,22 @@ describe('API tests', () => {
       }).then((response) => {
         expect(response.status).to.eq(200)
         expect(response.body).to.not.have.property('name', "usuwanie")
-      })
-    })
-  })
+      });
+    });
+  });
 
 
   it('test that user-agent set correctly', () => {
-cy.request({
-  method: 'GET',
-  url: 'https://httpbin.org/headers',
-  headers: {
-    'User-Agent': 'Test User-Agent'
-  }
-}).then((response) => {
-  expect(response.status).to.eq(200);
-  expect(response.body.headers['User-Agent']).to.eq('Test User-Agent')
-});
+    cy.request({
+      method: 'GET',
+      url: 'https://httpbin.org/headers',
+      headers: {
+        'User-Agent': 'Test User-Agent'
+      }
+    }).then((response) => {
+      expect(response.status).to.eq(200);
+      expect(response.body.headers['User-Agent']).to.eq('Test User-Agent')
+    });
   });
 
   it('test that custom header set correctly', () => {
@@ -77,99 +77,86 @@ cy.request({
       expect(response.status).to.eq(200);
       expect(response.body.headers['Custom-Header']).to.eq('Header-Value')
     });
-      });
-      
-
-it('test sending query parameter including random parameters', () => {
-  const randomParams = {
-    random1: Math.random(),
-    random2: Math.random()
-  }
-  cy.request({
-    method: 'GET',
-    url: 'https://httpbin.org/get',
-    qs: randomParams
-  }).then((response) => {
-    expect(response.status).to.eq(200)
-    expect(response.body.args).to.have.property('random1')
-    expect(response.body.args).to.have.property('random2')
   });
-});
 
-it('test response body', () => {
-  cy.request({
-    method: 'GET',
-    url: 'https://httpbin.org/json'
-  }).then(response => {
-    const expectedBody = {
-      "slideshow": {
-        "author": "Yours Truly",
-        "date": "date of publication",
-        "slides": [
-          {
-            "title": "Wake up to WonderWidgets!",
-            "type": "all"
-          },
-          {
-            "items": [
-              "Why <em>WonderWidgets</em> are great",
-              "Who <em>buys</em> WonderWidgets"
-            ],
-            "title": "Overview",
-            "type": "all"
-          }
-        ],
-        "title": "Sample Slide Show"
+
+  it('test sending query parameter including random parameters', () => {
+    const randomParams = {
+      random1: Math.random(),
+      random2: Math.random()
+    }
+    cy.request({
+      method: 'GET',
+      url: 'https://httpbin.org/get',
+      qs: randomParams
+    }).then((response) => {
+      expect(response.status).to.eq(200)
+      expect(response.body.args).to.have.property('random1')
+      expect(response.body.args).to.have.property('random2')
+    });
+  });
+
+  it('test response body', () => {
+    cy.request({
+      method: 'GET',
+      url: 'https://httpbin.org/json'
+    }).then(response => {
+      const expectedBody = {
+        "slideshow": {
+          "author": "Yours Truly",
+          "date": "date of publication",
+          "slides": [
+            {
+              "title": "Wake up to WonderWidgets!",
+              "type": "all"
+            },
+            {
+              "items": [
+                "Why <em>WonderWidgets</em> are great",
+                "Who <em>buys</em> WonderWidgets"
+              ],
+              "title": "Overview",
+              "type": "all"
+            }
+          ],
+          "title": "Sample Slide Show"
+        }
       }
-    }
-    expect(response.status).to.be.equal(200);
-    expect(response.body).to.deep.equal(expectedBody)
+      expect(response.status).to.be.equal(200);
+      expect(response.body).to.deep.equal(expectedBody)
+    });
   });
-});
 
-it('test header content', () => {
-  cy.request({
-    method: 'GET',
-    url: 'https://httpbin.org/headers'
-  }).then(response => {
-    expect(response.status).to.eq(200);
-    expect(response.headers).to.have.property('content-type', 'application/json')
-  })
-})
-
-it('test duration', () => {
-  cy.request({
-    method: 'GET',
-    url: 'https://httpbin.org/delay/1'
-  }).then(response => {
-    expect(response.status).to.be.equal(200);
-    expect(response.duration).to.be.lessThan(2500);
+  it('test header content', () => {
+    cy.request({
+      method: 'GET',
+      url: 'https://httpbin.org/headers'
+    }).then(response => {
+      expect(response.status).to.eq(200);
+      expect(response.headers).to.have.property('content-type', 'application/json')
+    });
   });
-});
 
-it('test send cookie', () => {
-  cy.request({
-    method: 'GET',
-    url: 'https://httpbin.org/cookies',
-    headers: {
-      Cookie: 'cookieName=cookieValue'
-    }
-  }).then(response => {
-    expect(response.status).to.eq(200);
-    expect(response.body.cookies).to.deep.eq({cookieName: 'cookieValue'})
-  })
-})
+  it('test duration', () => {
+    cy.request({
+      method: 'GET',
+      url: 'https://httpbin.org/delay/1'
+    }).then(response => {
+      expect(response.status).to.be.equal(200);
+      expect(response.duration).to.be.lessThan(2500);
+    });
+  });
 
-
-
-
-
-
-
-
-
-
-
-
-
+  it('test send cookie', () => {
+    cy.request({
+      method: 'GET',
+      url: 'https://httpbin.org/cookies',
+      headers: {
+        Cookie: 'cookieName=cookieValue'
+      }
+    }).then(response => {
+      expect(response.status).to.eq(200);
+      expect(response.body.cookies).to.deep.eq({ cookieName: 'cookieValue' })
+    });
+  });
 });
